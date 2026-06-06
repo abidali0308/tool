@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ClickForge - Clickable Image Tool</title>
+  <title>ClickForge - Vercel Short Links</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
@@ -12,19 +12,19 @@
 <body class="min-h-screen py-8">
 <div class="max-w-4xl mx-auto px-4">
   <h1 class="text-4xl font-bold text-white text-center mb-8">🎨 ClickForge</h1>
-  <p class="text-white text-center mb-8">Advanced Clickable Image Generator</p>
+  <p class="text-white text-center mb-8">Vercel Short Link Generator</p>
 
   <div class="bg-white rounded-3xl shadow-2xl p-8">
-    <input id="baseUrl" type="url" placeholder="Base Long URL daalein" 
+    <input id="baseUrl" type="url" placeholder="Base Long URL" 
            class="w-full p-4 border rounded-2xl mb-6 text-lg">
 
     <div id="blocks"></div>
 
     <div class="flex gap-4 mt-8">
       <button onclick="addBlock()" 
-              class="flex-1 py-4 border-2 border-dashed border-gray-400 rounded-2xl font-bold hover:border-pink-500">+ Add UTM + Images</button>
+              class="flex-1 py-4 border-2 border-dashed rounded-2xl font-bold">+ Add UTM + Images</button>
       <button onclick="generateLinks()" 
-              class="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 text-white py-4 rounded-2xl font-bold">🚀 Generate Links</button>
+              class="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 text-white py-4 rounded-2xl font-bold">Generate Vercel Links</button>
     </div>
   </div>
 
@@ -37,7 +37,7 @@ function addBlock() {
   const div = document.createElement('div');
   div.className = "p-6 bg-gray-50 rounded-3xl border mb-6";
   div.innerHTML = `
-    <input type="text" placeholder="UTM Medium (facebook, instagram, whatsapp)" class="utm w-full p-4 rounded-2xl border mb-4">
+    <input type="text" placeholder="UTM Medium (facebook, instagram etc)" class="utm w-full p-4 rounded-2xl border mb-4">
     <textarea rows="4" placeholder="Image URLs (ek line pe ek)" class="images w-full p-4 rounded-2xl border"></textarea>
   `;
   container.appendChild(div);
@@ -47,22 +47,26 @@ function generateLinks() {
   const baseUrl = document.getElementById('baseUrl').value.trim();
   if (!baseUrl) return alert("Base URL daalein!");
 
-  let html = `<h2 class="text-2xl font-bold text-white mb-6">✅ Generated Clickable Links</h2>`;
+  let html = `<h2 class="text-2xl font-bold text-white mb-6">✅ Generated Links</h2>`;
 
   document.querySelectorAll('#blocks > div').forEach(block => {
     const utm = block.querySelector('.utm').value.trim();
     const images = block.querySelector('.images').value.trim().split('\n').filter(Boolean);
 
-    if (utm && images.length > 0) {
+    if (utm && images.length) {
       html += `<div class="bg-white p-6 rounded-3xl mb-8 shadow">
-        <h3 class="font-bold text-xl mb-4 text-purple-700">UTM: ${utm}</h3>`;
-      
-      images.forEach(img => {
+        <h3 class="font-bold text-xl mb-4">UTM: ${utm}</h3>`;
+
+      images.forEach((img, index) => {
+        // Vercel domain pe short code style link (fake for now)
+        const shortCode = Math.random().toString(36).substring(2, 8);
+        const shortLink = `https://tool-three-ashy.vercel.app/go/${shortCode}`;
+
         html += `
           <div class="flex gap-4 bg-gray-50 p-4 rounded-2xl mb-4 items-center">
-            <img src="${img.trim()}" class="w-28 h-28 object-cover rounded-xl shadow">
+            <img src="${img.trim()}" class="w-28 h-28 object-cover rounded-xl">
             <div class="flex-1">
-              <p class="text-blue-600 font-medium break-all">${baseUrl}</p>
+              <a href="\( {shortLink}" target="_blank" class="text-blue-600 font-medium break-all block"> \){shortLink}</a>
               <p class="text-sm text-gray-500 mt-1">Image: ${img.trim()}</p>
             </div>
           </div>`;
