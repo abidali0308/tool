@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ClickForge - Vercel</title>
+  <title>ClickForge</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-indigo-600 to-purple-700 min-h-screen py-8">
@@ -18,4 +18,63 @@
     <div id="blocks"></div>
 
     <div class="flex gap-4 mt-8">
-      <button onclick="addBlock()" class="flex-1 py-4 border-2 border-dashed rounded-2xl font
+      <button onclick="addBlock()" 
+              class="flex-1 py-4 border-2 border-dashed border-gray-400 rounded-2xl font-bold text-lg">+ Add UTM + Images</button>
+      <button onclick="generateLinks()" 
+              class="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 text-white py-4 rounded-2xl font-bold text-lg">🚀 Generate Short Links</button>
+    </div>
+  </div>
+
+  <div id="results" class="mt-10"></div>
+</div>
+
+<script>
+function addBlock() {
+  const container = document.getElementById('blocks');
+  const div = document.createElement('div');
+  div.className = "p-6 bg-gray-50 rounded-3xl border mb-6";
+  div.innerHTML = `
+    <input type="text" placeholder="UTM Medium (facebook, instagram etc)" class="utm w-full p-4 rounded-2xl border mb-4">
+    <textarea rows="4" placeholder="Image URLs (ek line pe ek)" class="images w-full p-4 rounded-2xl border"></textarea>
+  `;
+  container.appendChild(div);
+}
+
+function generateLinks() {
+  const baseUrl = document.getElementById('baseUrl').value.trim();
+  if (!baseUrl) return alert("Base URL daalein!");
+
+  let html = `<h2 class="text-2xl font-bold text-white mb-6">✅ Generated Vercel Links</h2>`;
+
+  document.querySelectorAll('#blocks > div').forEach(block => {
+    const utm = block.querySelector('.utm').value.trim();
+    const images = block.querySelector('.images').value.trim().split('\n').filter(Boolean);
+
+    if (utm && images.length) {
+      html += `<div class="bg-white p-6 rounded-3xl mb-8 shadow">
+        <h3 class="font-bold text-xl mb-4">UTM: ${utm}</h3>`;
+
+      images.forEach(img => {
+        const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+        const shortLink = `https://three-ashy.vercel.app/go/${code}`;
+
+        html += `
+          <div class="flex gap-4 bg-gray-50 p-4 rounded-2xl mb-4 items-center">
+            <img src="${img.trim()}" class="w-28 h-28 object-cover rounded-xl">
+            <div class="flex-1">
+              <a href="\( {shortLink}" target="_blank" class="text-blue-600 font-medium break-all block"> \){shortLink}</a>
+              <p class="text-sm text-gray-500">Image: ${img.trim()}</p>
+            </div>
+          </div>`;
+      });
+      html += `</div>`;
+    }
+  });
+
+  document.getElementById('results').innerHTML = html;
+}
+
+window.onload = addBlock;
+</script>
+</body>
+</html>
