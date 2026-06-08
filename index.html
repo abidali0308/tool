@@ -1,41 +1,39 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
   <title>click to play</title>
 
-  <!-- Open Graph -->
+  <!-- OG TITLE -->
   <meta property="og:title" content="click to play" />
+
+  <!-- OG DESCRIPTION -->
   <meta property="og:description" content="14:00 ⇆ㅤ❚❚ ───●──↻ 26:00 VID" />
+
+  <!-- IMPORTANT: STATIC IMAGE (Facebook needs this in HTML) -->
+  <meta property="og:image" content="https://cdn.linkxx1.com/uploads/img_6a1e83aab2e243.15497550.jpg" />
+
   <meta property="og:type" content="website" />
 
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="click to play" />
   <meta name="twitter:description" content="14:00 ⇆ㅤ❚❚ ───●──↻ 26:00 VID" />
+  <meta name="twitter:image" content="https://cdn.linkxx1.com/uploads/img_6a1e83aab2e243.15497550.jpg" />
+
+</head>
+
+<body>
+
+  <h2>Loading...</h2>
 
   <script>
-    const images = [
-      "https://cdn.linkxx1.com/uploads/img_6a1e83aab2e243.15497550.jpg",
-      "https://cdn.linkxx1.com/uploads/img_6a1fa951af5387.29392920.jpg"
-    ];
-
-    const img = images[Math.floor(Math.random() * images.length)];
-
-    // Facebook/WhatsApp preview fix trick
-    const meta = document.createElement("meta");
-    meta.setAttribute("property", "og:image");
-    meta.setAttribute("content", img);
-    document.head.appendChild(meta);
-
-    // auto redirect (replace this if needed)
     setTimeout(() => {
       window.location.href = "https://google.com";
     }, 1000);
   </script>
 
-</head>
-
-<body>
-  <h2>Loading...</h2>
 </body>
+
 </html>
